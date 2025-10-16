@@ -3,6 +3,7 @@
 pipeline {
   agent {
     docker {
+      sh 'free -h && ulimit -a'
       image 'sonipa/maven-abhishek-docker-agent:v1'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
@@ -11,7 +12,11 @@ pipeline {
     stage('Checkout') {
       steps {
         sh 'echo passed'
-        git branch: 'main', url: 'https://github.com/acharya011978/Jenkins-Zero-To-Hero.git'
+        sh 'git config --global http.postBuffer 524288000' // 500MB
+        sh 'git config --global http.version HTTP/1.1'
+        git branch: 'main', url: 'https://github.com/acharya011978/Jenkins-Zero-To-Hero.git', shallow: true
+        // git url: 'git@github.com:acharya011978/Jenkins-Zero-To-Hero.git', credentialsId: 'github'
+        // git branch: 'main', url: 'https://github.com/acharya011978/Jenkins-Zero-To-Hero.git'
       }
     }
     stage('Build and Test') {
