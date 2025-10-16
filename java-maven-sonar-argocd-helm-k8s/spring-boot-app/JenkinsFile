@@ -18,7 +18,10 @@ pipeline {
       steps {
         sh 'ls -ltr'
         // build the project and create a JAR file
-        sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn clean package -e '
+        sh 'export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64'
+        sh 'export PATH=$JAVA_HOME/bin:$PATH'
+        sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn clean install  -e '
+
       }
     }
     stage('Static Code Analysis') {
