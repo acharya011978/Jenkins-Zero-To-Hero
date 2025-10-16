@@ -11,12 +11,13 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        sh 'echo passed'
+        
         // sh 'git config --global http.postBuffer 524288000' // 500MB
         // sh 'git config --global http.version HTTP/1.1'
         // git branch: 'main', url: 'https://github.com/acharya011978/Jenkins-Zero-To-Hero.git', shallow: true
         // git url: 'git@github.com:acharya011978/Jenkins-Zero-To-Hero.git', credentialsId: 'github'
-        // git branch: 'main', url: 'https://github.com/acharya011978/Jenkins-Zero-To-Hero.git'
+        git branch: 'main', url: 'https://github.com/acharya011978/Jenkins-Zero-To-Hero.git'
+        sh 'echo passed'
       }
     }
     stage('Build and Test') {
