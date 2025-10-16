@@ -3,7 +3,7 @@
 pipeline {
   agent {
     docker {
-      sh 'free -h && ulimit -a'
+      // sh 'free -h && ulimit -a'
       image 'sonipa/maven-abhishek-docker-agent:v1'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
@@ -21,7 +21,7 @@ pipeline {
     }
     stage('Build and Test') {
       steps {
-        sh 'ls -ltr'
+        sh 'ls -lrth'
         // build the project and create a JAR file
         sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn clean install  -e '
 
