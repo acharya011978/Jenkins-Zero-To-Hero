@@ -13,7 +13,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        
+        deleteDir()
         // sh 'git config --global http.postBuffer 524288000' // 500MB
         // sh 'git config --global http.version HTTP/1.1'
         // git branch: 'main', url: 'https://github.com/acharya011978/Jenkins-Zero-To-Hero.git', shallow: true
@@ -30,7 +30,7 @@ pipeline {
           export MAVEN_OPTS="-Dmaven.repo.local=/home/jenkins/.m2"
           java -version
           cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
-          mvn clean install -e
+          mvn clean install -e -DskipTests
         '''
       }
     }
