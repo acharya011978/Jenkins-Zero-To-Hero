@@ -4,7 +4,9 @@ pipeline {
   agent {
     docker {
       // sh 'free -h && ulimit -a'
-      image 'sonipa/maven-abhishek-docker-agent:v1'
+      // image 'sonipa/maven-abhishek-docker-agent:v1'
+      image 'eclipse-temurin:17-jdk-alpine'
+      image 'maven:3.9.6-eclipse-temurin-17-alpine'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
