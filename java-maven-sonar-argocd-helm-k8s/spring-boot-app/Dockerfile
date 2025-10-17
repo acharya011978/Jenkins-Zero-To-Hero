@@ -4,5 +4,5 @@ WORKDIR /build
 RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jdk-alpine
-COPY --from=build /build/target/spring-boot-web.jar /opt/app/app.jar
+COPY --from=build /build/target/*.jar /opt/app/app.jar
 ENTRYPOINT ["java","-jar","/opt/app/app.jar"]
