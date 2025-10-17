@@ -24,11 +24,13 @@ pipeline {
     }
     stage('Build and Test') {
       steps {
-        sh 'java -version'
-        sh 'ls -lrth'
-        // build the project and create a JAR file
-        sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn clean install  -e '
-
+        sh '''
+          mkdir -p /home/jenkins/.m2
+          export MAVEN_OPTS="-Dmaven.repo.local=/home/jenkins/.m2"
+          java -version
+          cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
+          mvn clean install -e
+        '''
       }
     }
     stage('Static Code Analysis') {
