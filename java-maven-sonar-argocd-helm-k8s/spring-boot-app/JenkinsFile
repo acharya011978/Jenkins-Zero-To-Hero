@@ -26,6 +26,7 @@ pipeline {
       steps {
         sh '''
           mkdir -p /home/jenkins/.m2
+          export HOME=/home/jenkins
           export MAVEN_OPTS="-Dmaven.repo.local=/home/jenkins/.m2"
           java -version
           cd java-maven-sonar-argocd-helm-k8s/spring-boot-app
