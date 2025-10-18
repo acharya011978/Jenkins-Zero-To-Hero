@@ -24,7 +24,7 @@ pipeline {
 
     stage('Checkout') {
       steps {
-        deleteDir()
+        // deleteDir()
         // sh 'git config --global http.postBuffer 524288000' // 500MB
         // sh 'git config --global http.version HTTP/1.1'
         // git branch: 'main', url: 'https://github.com/acharya011978/Jenkins-Zero-To-Hero.git', shallow: true
