@@ -1,4 +1,5 @@
 FROM maven:3.9.6-eclipse-temurin-17 AS build
+RUN apt-get update && apt-get install -y docker.io && rm -rf /var/lib/apt/lists/*
 COPY . /build
 WORKDIR /build
 RUN mkdir -p /home/jenkins 
