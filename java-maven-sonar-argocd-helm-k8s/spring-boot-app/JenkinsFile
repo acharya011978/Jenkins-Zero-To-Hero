@@ -8,10 +8,20 @@ pipeline {
       // image 'eclipse-temurin:17-jdk-alpine'
 
       image 'maven:3.9.6-eclipse-temurin-17'
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+      args '--user 123:124 -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
   stages {
+   stage('Validate GitHub Token') {
+     steps {
+       withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+        sh '''
+          curl -s -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/user | grep login
+        '''
+    }
+  }
+}
+
     stage('Checkout') {
       steps {
         deleteDir()
@@ -44,6 +54,7 @@ pipeline {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
 		  catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                           sh '''
+                             curl -s -u $SONAR_AUTH_TOKEN: http://192.168.8.133:9000/api/authentication/validate
 			     cd java-maven-sonar-argocd-helm-k8s/spring-boot-app 
 				 mvn sonar:sonar  \
 				 -Dsonar.login=$SONAR_AUTH_TOKEN  \
