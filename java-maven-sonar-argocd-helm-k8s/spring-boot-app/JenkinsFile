@@ -96,6 +96,13 @@ pipeline {
 
         steps {
            script {
+             sh '''
+                git config --global http.postBuffer 524288000
+                git config --global http.maxRequestBuffer 100M
+                git config --global http.lowSpeedLimit 0
+                git config --global http.lowSpeedTime 999999
+             '''  
+                  
                 cleanWs()     // Clean workspace before fresh checkout
                 checkout scm 
 
@@ -103,6 +110,9 @@ pipeline {
                    sh '''
                        git config --global user.email "nrusingha.acharya@gmail.com"
                        git config --global user.name "acharya011978"
+                       git config --global http.postBuffer 524288000  // 500 MB
+                       git config --global http.maxRequestBuffer 100M
+                       
 
                        BUILD_NUMBER=${BUILD_NUMBER}
                        sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
