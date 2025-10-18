@@ -96,7 +96,7 @@ pipeline {
 
         steps {
            script {
-                // Re-checkout the repository into the current workspace
+                cleanWs()     // Clean workspace before fresh checkout
                 checkout scm 
 
                 withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
